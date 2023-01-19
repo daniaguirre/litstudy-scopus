@@ -1,4 +1,4 @@
-from ..common import progress_bar, canonical
+from ..common import progress_bar, canonical, robust_open
 from ..types import Document, DocumentSet, DocumentIdentifier, Author, \
                    Affiliation
 from collections import defaultdict
@@ -7,6 +7,7 @@ from typing import Tuple, Optional
 import logging
 import random
 import shelve
+import csv
 
 
 SCOPUS_CACHE = '.scopus'
@@ -246,3 +247,12 @@ def refine_scopus(docs: DocumentSet, *, search_title=True
         return None
 
     return docs._refine_docs(callback)
+
+def load_scopus_csv(path: str) -> DocumentSet:
+    """ Import CSV file exported from
+    `Scopus page <https://www.scopus.com/search/form.uri?display=advanced>`_.
+    """
+    with robust_open(path) as f:
+        lines = csv.DictReader(f)
+        docs = [ScopusDocument(line) for line in lines]
+        return DocumentSet(docs)
