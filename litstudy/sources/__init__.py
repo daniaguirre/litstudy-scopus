@@ -1,4 +1,4 @@
-from .scopus import search_scopus, refine_scopus, fetch_scopus
+from .scopus import search_scopus, refine_scopus, fetch_scopus, load_scopus_csv
 from .bibtex import load_bibtex
 from .semanticscholar import fetch_semanticscholar, search_semanticscholar, \
                              refine_semanticscholar
@@ -21,6 +21,7 @@ __all__ = [
     'fetch_scopus',
     'load_bibtex',
     'load_ieee_csv',
+    'load_scopus_csv',
     'load_springer_csv',
     'load_ris_file',
     'search_dblp',
